@@ -43,7 +43,7 @@
 
 <h3>Pré-requisitos</h3>
 
-<p align="justify">Ponto Importe: O projeto foi testado em um ambiente local com o Minikube mediante o driver de hipervisor Docker, caso opte por usar outro driver, esteja seguro que conhece bem o gerenciador de pacotes, sistema de arquivos e comandos que sejam necessários para resolver eventuais imprevistos que possam ocorrer na sua opção, você será responsável pelo troubleshooting do Minikube. Se você não está totalmente seguro, sinta-se a vontade para configurar o Minikube com o driver Docker da seguinte forma:</p>
+<p align="justify">Ponto Importante: O projeto foi testado em um ambiente local com o Minikube mediante o driver de hipervisor Docker, caso opte por usar outro driver, esteja seguro que conhece bem o gerenciador de pacotes, sistema de arquivos e comandos que sejam necessários para resolver eventuais imprevistos que possam ocorrer na sua opção, você será responsável pelo troubleshooting do Minikube. Se você não está totalmente seguro, sinta-se a vontade para configurar o Minikube com o driver Docker da seguinte forma:</p>
   
 ```bash
 # Certifique-se que o Docker está instalado e rodando corretamente.
@@ -65,7 +65,7 @@ minikube ip
 <h3>Procedimentos</h3>
 
 1. Para habilitar o controlador NGINX Ingress, execute o seguinte comando: `minikube addons enable ingress`
-2. Realize o clone deste repositório e entre na release do projeto: `git clone https://github.com/abrantedevops/strapi-nextjs-postgres.git ; cd strapi-nextjs-postgres/strapi-foodadvisor`
+2. Realize o clone deste repositório e entre na release do projeto: `git clone https://github.com/abrantedevops/proj-cluster---k8s-helm.git ; cd proj-cluster---k8s-helm/strapi-foodadvisor`
 3. Atualize as dependências e retorne ao diretório raiz com o comando: `helm dependency update ; cd ..`
 4. No diretório raiz, implemente a aplicação através do seguinte comando: `helm upgrade strapi-foodadvisor ./strapi-foodadvisor --install`
 5. Para verificar se a aplicação foi implementada com sucesso, execute o seguinte comando: `kubectl get all`
