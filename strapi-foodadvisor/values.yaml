@@ -15,12 +15,14 @@ backend:
     image:
       repository: abrantedevops/foodadvisor-api
       pullPolicy: IfNotPresent
-      tag: ""
+      tag: "1.2.0"
       ports:
         containerPort: 1337
         
   # env for deployment.yaml
   extraEnvs:
+    - name: DATABASE_CLIENT
+      value: postgres
     - name: DATABASE_HOST
       valueFrom:
         secretKeyRef:
@@ -56,7 +58,7 @@ backend:
 
   secret:
     name: foodadvisor
-    host: localhost
+    host: strapi-foodadvisor-postgresql
     port: "5432"
     username: strapi
     password: strapi
@@ -99,6 +101,20 @@ frontend:
       tag: ""
       ports:
         containerPort: 3000
+  
+  extraEnvs:
+    - name: DATABASE_CLIENT
+      value: postgres
+    - name: DATABASE_HOST
+      value: strapi-foodadvisor-postgresql
+    - name: DATABASE_PORT
+      value: "5432"
+    - name: DATABASE_USERNAME
+      value: strapi
+    - name: DATABASE_PASSWORD
+      value: strapi
+    - name: DATABASE_NAME
+      value: strapi
 
   service:
     name: foodadvisor-frontend

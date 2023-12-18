@@ -11,7 +11,7 @@
 <p align="justify">O frontend é criado usando Next.js, sendo um framework React com renderização híbrida estática e de servidor, bem como suporte a TypeScript.</p>
 
 <h3>Banco de dados</h3>
-<p align="justify">O Postgres é usado como banco de dados para armazenar os dados da aplicação.</p>
+<p align="justify">O Postgres é usado como banco de dados para armazenar os dados da aplicação. Há uma versão deste projeto que utiliza o sqlite como banco de dados, pois o mesmo foi utilizado por padrão pelo Strapi no Food Advisor. No entanto, para fins de requisito, foi utilizado o Postgres. A versão que utiliza o sqlite pode ser encontrada na Branch <a href="#">sqlite</a> deste repositório.</p>
 
 <h3>Aplicação</h3>
 <p align="justify">Para a aplicação o <a href="https://github.com/strapi/foodadvisor.git">Food Advisor</a> foi utilizado como base para o projeto. </p>
@@ -52,14 +52,10 @@ minikube config set driver docker
 minikube start
 ```
 
-<p align="justify">Para garantir que o projeto funcione na versão local, é necessário adicionar o IP do Minikube no arquivo /etc/hosts (ou equivalente em um sistema operacional não baseado em Linux): </p>
+<p align="justify">Para garantir que o projeto funcione na versão local, é necessário adicionar no arquivo /etc/hosts (ou equivalente em um sistema operacional não baseado em Linux) o seguinte PATH do Ingress: </p>
   
 ```bash
-minikube ip
-192.168.49.2
-
-# Adicione a linha abaixo no arquivo /etc/hosts
-192.168.49.2  foodadvisor.client  foodadvisor.backend
+127.0.0.1  foodadvisor.client  foodadvisor.backend
 ```
 
 <h3>Procedimentos</h3>
@@ -73,25 +69,50 @@ minikube ip
 
 <h2 id="test">Testes</h2>
 
+<h3>Redirecionamentos</h3>
+
+- Para os testes seguintes foi feito um port-forward para o service do ingress-controller da seguinte forma: `kubectl port-forward svc/ingress-nginx-controller 8889:80 -n ingress-nginx`
+
+- Para acessar o painel de administração, utilize o comando: `kubectl port-forward svc/foodadvisor-backend 1337:80`
+
 <h3>Recursos</h3>
 
 O primeiro teste consistiu em verificar os recursos criados no cluster k8s. Por meio de um um alias feito da seguinte forma: `alias kgetall='kubectl get pod,svc,secret,deployment,ingress,replicaset'` foi possivel verificar o funcionamento de todos os recursos do cluster conforme os requisitos do projeto.
 
-<img src="./img/k8s-recursos.png" alt="architecture" width="100%"/>
+<img src="./img/k8s-recursos.png" alt="k8s-recursos" width="100%"/>
 
-<h3>Frontend</h3>
-
-<p align="justify">Acesse o endereço http://foodadvisor.client/ e verifique a aplicação Food Advisor.</p>
-<img src="./img/frontend.png" alt="architecture" width="100%"/>
+<br> 
 
 <h3>Backend</h3>
 
-<p align="justify">- Verifique no endereço http://foodadvisor.backend/ o funcionamento do Strapi. </p>
-<p align="justify">- Para acessar o painel de administração, utilize o comando: `kubectl port-forward svc/foodadvisor-backend 1337:80`</p>
-<p align="justify">- Acesse o endereço http://localhost:1337 e use as credenciais da aplicação</p>
-<img src="./img/strapi.png" alt="architecture" width="100%"/>
-<br><br>
-<img src="./img/painel-strapi.png" alt="architecture" width="100%"/>
+<p align="justify"> Analisando o log do Pod do backend levantando no cluster, foi possível verificar que a conexão com o banco de dados foi estabelecida com êxito.</p>
+
+<img src="./img/backend-tem.png" alt="backend-tem" width="100%"/>
+
+<br>
+
+<p align="justify">Verifique no endereço http://foodadvisor.backend:8889/ o funcionamento do Strapi para a criação da conta de administrador, conforme a imagem abaixo.</p>
+
+<img src="./img/backend-new.png" alt="backend-new" width="100%"/>
+
+<br>
+
+<p align="justify">Isso ocorre porque estamos usando um banco de dados novo, sem nenhuma informação previamente armazenada, diferente do que ocorre na versão "nativa" do Food Advisor que utiliza o arquivo data.zip para popular o banco de dados sqlite, tal como consta no arquivo "database.js" da api.</p>
+
+<p align="justify">Acesse o endereço http://localhost:1337/admin para criar a conta de administrador informando os dados solicitados, após isso o painel do Strapi será exibido.</p>
+
+<img src="./img/signup-strapi.png" alt="signup-strapi" width="100%"/>
+
+<img src="./img/painel-strapip.png" alt="painel-strapip" width="100%"/>
+
+
+<h3>Frontend</h3>
+
+<p align="justify">No Pod do frontend a compilação foi bem sucedida, conforme imagem abaixo.</p>
+
+<img src="./img/frontend-log.png" alt="painel-strapip" width="100%"/>
+<br>
+<p align="justify">Ao Acessar o endereço http://foodadvisor.client:8889/ encontramos o código de status 404, pois como o banco de dados está vazio, não há nenhuma informação para ser exibida.</p>
 
 <h3>Banco de dados</h3>
 
@@ -110,4 +131,5 @@ Versões utilizadas:
   - Strapi: 4.13.5;
   - Postgres: 16.1;
   - Minikube: 1.31.2;
-  - Kubectl: 1.28.4
+  - Kubectl: 1.28.4;
+  - Linux Ubuntu: 20.04.6 LTS

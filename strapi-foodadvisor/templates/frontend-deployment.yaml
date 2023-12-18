@@ -18,3 +18,5 @@ spec:
         imagePullPolicy: {{ .Values.frontend.deployment.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.frontend.deployment.image.ports.containerPort }}
+        env:
+          {{- toYaml .Values.frontend.extraEnvs | nindent 12 }}
