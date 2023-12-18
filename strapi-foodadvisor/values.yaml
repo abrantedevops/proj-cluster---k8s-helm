@@ -15,54 +15,16 @@ backend:
     image:
       repository: abrantedevops/foodadvisor-api
       pullPolicy: IfNotPresent
-      tag: "1.2.0"
+      tag: ""
       ports:
         containerPort: 1337
-        
-  # env for deployment.yaml
-  extraEnvs:
-    - name: DATABASE_CLIENT
-      value: postgres
-    - name: DATABASE_HOST
-      valueFrom:
-        secretKeyRef:
-          name: foodadvisor
-          key: host
-    - name: DATABASE_PORT
-      valueFrom:
-        secretKeyRef:
-          name: foodadvisor
-          key: port
-    - name: DATABASE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          name: foodadvisor
-          key: username
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: foodadvisor
-          key: password
-    - name: DATABASE_NAME
-      valueFrom:
-        secretKeyRef:
-          name: foodadvisor
-          key: database
-
+  
   service:
     name: foodadvisor-backend
     type: ClusterIP
     ports:
       port: 80
       targetPort: 1337
-
-  secret:
-    name: foodadvisor
-    host: strapi-foodadvisor-postgresql
-    port: "5432"
-    username: strapi
-    password: strapi
-    database: strapi
 
   ingress:
     name: ingress-backend
@@ -101,20 +63,6 @@ frontend:
       tag: ""
       ports:
         containerPort: 3000
-  
-  extraEnvs:
-    - name: DATABASE_CLIENT
-      value: postgres
-    - name: DATABASE_HOST
-      value: strapi-foodadvisor-postgresql
-    - name: DATABASE_PORT
-      value: "5432"
-    - name: DATABASE_USERNAME
-      value: strapi
-    - name: DATABASE_PASSWORD
-      value: strapi
-    - name: DATABASE_NAME
-      value: strapi
 
   service:
     name: foodadvisor-frontend
@@ -243,14 +191,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-
-# Dependencies for the chart.yaml
-#(For more: https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml)
-
-postgresql:
-  auth:
-    postgresPassword: strapi
-    username: strapi
-    password: strapi
-    database: strapi
