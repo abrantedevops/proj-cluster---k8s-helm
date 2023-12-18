@@ -57,7 +57,7 @@ minikube ip
 <h3>Procedimentos</h3>
 
 1. Para habilitar o controlador NGINX Ingress, execute o seguinte comando: `minikube addons enable ingress`
-2. Realize o clone deste repositório e entre na release do projeto: `git clone https://github.com/abrantedevops/proj-cluster---k8s-helm.git ; cd proj-cluster---k8s-helm`
+2. Realize o clone deste repositório e entre na release do projeto: `git clone -b sqlite https://github.com/abrantedevops/proj-cluster---k8s-helm.git ; cd proj-cluster---k8s-helm`
 3. No diretório raiz, implemente a aplicação através do seguinte comando: `helm upgrade strapi-foodadvisor ./strapi-foodadvisor --install`
 4. Para verificar se a aplicação foi implementada com sucesso, execute o seguinte comando: `kubectl get all`
 5. Caso queira excluir a aplicação, execute o seguinte comando: `helm uninstall strapi-foodadvisor`
