@@ -11,7 +11,7 @@
 <p align="justify">O frontend é criado usando Next.js, sendo um framework React com renderização híbrida estática e de servidor, bem como suporte a TypeScript.</p>
 
 <h3>Banco de dados</h3>
-<p align="justify">O Postgres é usado como banco de dados para armazenar os dados da aplicação. Há uma versão deste projeto que utiliza o sqlite como banco de dados, pois o mesmo foi utilizado por padrão pelo Strapi no Food Advisor. No entanto, para fins de requisito, foi utilizado o Postgres. A versão que utiliza o sqlite pode ser encontrada na Branch <a href="#">sqlite</a> deste repositório.</p>
+<p align="justify">O Postgres é usado para armazenar os dados da aplicação. Há uma versão deste projeto que emprega o sqlite como exemplo de banco de dados. No entanto, para fins de requisito, foi feita a integração com o Postgres. A versão que utiliza o sqlite pode ser encontrada na Branch <a href="#">sqlite</a> deste repositório.</p>
 
 <h3>Aplicação</h3>
 <p align="justify">Para a aplicação o <a href="https://github.com/strapi/foodadvisor.git">Food Advisor</a> foi utilizado como base para o projeto. </p>
